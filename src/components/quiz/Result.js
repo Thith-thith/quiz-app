@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import {RiMedalLine} from 'react-icons/ri';
 import { Link } from 'react-router-dom';
+import  swal  from '@sweetalert/with-react';
 
 
 const TITLE = "Result | Quiz app";
@@ -10,7 +11,7 @@ class Result extends React.Component {
 
     constructor (props){
         super(props);
-        this.state = {
+        this.state = {  
             score: 0,
             numberOfQuestions: 0,
             numberOfAnsweredQuestions:0,
@@ -34,13 +35,17 @@ class Result extends React.Component {
         }
     }
 
-    submitForm = e => {
-        e.preventDefault();
-        console.log('hello world uuuu');
-      };
 
     render() { 
 
+        const submitAlert = () =>{
+            swal({
+                title: "Thank you so much!",
+                icon: "success",
+                button: "Ok",
+                timer:3000,
+              });
+        }
 
         const { state } = this.props.location;
         let stats, remark;
@@ -85,14 +90,16 @@ class Result extends React.Component {
                         </div>
                         <section>
                            <Link to="/play/quiz"> <button className="w-32 mr-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"> Play agian!</button></Link>
-                            <Link to="/"><button className="w-32 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" type="submit" onSubmit={console.log('hello world')}> Submit </button></Link>
+                           <Link to="/"> <button className="w-32 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" type="button" onClick={submitAlert}> Submit </button></Link>
                         </section>
                     </form>
                 </React.Fragment>
             )
         }
         else{
-            stats = (<h1>No stats available please take a quiz!</h1>)
+            stats =(<form className="bg-indigo-200 container text-center shadow-xl rounded px-8 pt-6 pb-8 mb-4 mx-auto mt-12 h-full">
+                 <h1>No stats available please take a quiz!</h1>
+            </form>)
         }
         
         return (    
